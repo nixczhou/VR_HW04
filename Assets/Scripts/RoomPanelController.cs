@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 [RequireComponent(typeof(PhotonView))]
 public class RoomPanelController : MonoBehaviourPunCallbacks
@@ -53,6 +55,9 @@ public class RoomPanelController : MonoBehaviourPunCallbacks
 
         if (!team1.activeSelf)
         {
+#if(UNITY_EDITOR)
+            Debug.Log("You are team 1");
+#endif
             team1.SetActive(true);
             texts = team1.GetComponentsInChildren<Text>();
             texts[0].text = PhotonNetwork.NickName;
@@ -65,10 +70,14 @@ public class RoomPanelController : MonoBehaviourPunCallbacks
                     { "Team","team1" },
                     { "isReady", false }
             };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(costomProperties);
+            bool setBool = PhotonNetwork.LocalPlayer.SetCustomProperties(costomProperties);
+            Debug.Log("setBool: " + setBool);
         }
         else if (!team2.activeSelf)
         {
+#if (UNITY_EDITOR)
+            Debug.Log("You are team 2");
+#endif
             team2.SetActive(true);
             texts = team2.GetComponentsInChildren<Text>();
             texts[0].text = PhotonNetwork.NickName;
@@ -81,9 +90,9 @@ public class RoomPanelController : MonoBehaviourPunCallbacks
                     { "Team", "team2" },
                     { "isReady", false }
             };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(costomProperties);
+            bool setBool = PhotonNetwork.LocalPlayer.SetCustomProperties(costomProperties);
+            Debug.Log("setBool: " + setBool);
         }
-		ReadyButtonControl();
 	}
 
     /// <summary>
@@ -112,7 +121,7 @@ public class RoomPanelController : MonoBehaviourPunCallbacks
                 continue;
 
 			costomProperties = p.CustomProperties;
-			if (costomProperties["Team"].Equals ("Team1"))
+			if (costomProperties["Team"].Equals ("team1"))
             {
                 team1.SetActive(true);
 
@@ -198,7 +207,15 @@ public class RoomPanelController : MonoBehaviourPunCallbacks
     /// <returns></returns>
     public void ClickStartGameButton()
     {
-		foreach (Player p in PhotonNetwork.PlayerList)
+        Player[] playerList = PhotonNetwork.PlayerList;
+
+        if (playerList.Length == 1)
+        {
+            warningMess.text = "just one people => cannot start";
+            return;
+        }
+
+        foreach (Player p in PhotonNetwork.PlayerList)
         {
 			if(p.IsLocal)
                 continue;

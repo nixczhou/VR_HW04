@@ -23,17 +23,7 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
     /// <summary>
     /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
     /// </summary>
-    private string gameVersion = "1";
-
-    /// <summary>
-    /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
-    /// </summary>
-    void Awake()
-    {
-        // #Critical
-        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
+    private string gameVersion = "2.0";
 
     /// <summary>
     /// Init the connection according to the client connection state
@@ -56,13 +46,12 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 		connectionState.text = "";  //init the mess of the connection state
     }
 
+#if(UNITY_EDITOR)
     /// <summary>
     /// Network State Debug
     /// </summary>
     /// <param></param>
     /// <returns></returns>
-    //Debug on Unity
-#if(UNITY_EDITOR)
     private void Update()
     {
         connectionState.text = PhotonNetwork.NetworkClientState.ToString(); //Show the details on the bottom left-hand corner
@@ -108,7 +97,7 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsConnected)
         {
-            // #Critical, we must first and foremost connect to Photon Online Server.
+            //Critical, we must first and foremost connect to Photon Online Server.
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;
 #if(UNITY_EDITOR)
@@ -153,31 +142,30 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param></param>
     /// <returns></returns>
-    public override void OnRoomListUpdate(List<RoomInfo> _roomInfo)
+    public override void OnRoomListUpdate(List<RoomInfo> _roomList)
     {
 #if (UNITY_EDITOR)
         Debug.Log("Update the Room List");
 #endif
         LobbyPanelController lobbyPanelScript = lobbyPanel.GetComponent<LobbyPanelController>();
-
-        /*Debug.Log("_roomInfo: " + _roomInfo.Count);
-        Debug.Log("Count: " + PhotonNetwork.CountOfRooms);
-        foreach (RoomInfo i in _roomInfo)
-            Debug.Log("DETAIL: " + i.IsOpen + i.IsVisible);*/
-        int roomNumber = 0;
-        for (int i = 0; i < _roomInfo.Count; i++)
+        
+        for (int i = 0; i < _roomList.Count; i++)
         {
-            RoomInfo info = _roomInfo[i];
-            if (!info.RemovedFromList)
+            RoomInfo info = _roomList[i];
+            if (info.RemovedFromList)
             {
-                lobbyPanelScript.roomInfo[roomNumber] = info;
-                roomNumber++;
+                lobbyPanelScript.cachedRoomList.Remove(info.Name);
+            }
+            else
+            {
+                lobbyPanelScript.cachedRoomList[info.Name] = info;
             }
         }
-
-        lobbyPanelScript.roomInfo = _roomInfo.ToArray();
-
-        lobbyPanelScript.maxPageNumber = (lobbyPanelScript.roomInfo.Length - 1) / lobbyPanelScript.roomPerPage + 1;
+        
+#if(UNITY_EDITOR)
+        Debug.Log("lobbyPanelScript.cachedRoomList Count = " + lobbyPanelScript.cachedRoomList.Count);
+#endif
+        lobbyPanelScript.maxPageNumber = (lobbyPanelScript.cachedRoomList.Count - 1) / lobbyPanelScript.roomPerPage + 1;
         if (lobbyPanelScript.currentPageNumber > lobbyPanelScript.maxPageNumber)
             lobbyPanelScript.currentPageNumber = lobbyPanelScript.maxPageNumber;
         lobbyPanelScript.pageMessage.text = lobbyPanelScript.currentPageNumber.ToString() + " / " + lobbyPanelScript.maxPageNumber.ToString();
@@ -186,7 +174,7 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 
         lobbyPanelScript.ShowRoomMessage();
 
-        if (lobbyPanelScript.roomInfo.Length == 0)
+        if (lobbyPanelScript.cachedRoomList.Count == 0)
             lobbyPanelScript.randomJoinButton.interactable = false;
         else
             lobbyPanelScript.randomJoinButton.interactable = true;
@@ -202,7 +190,9 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
     {
         Debug.Log("create room successfully and enter room now");
     }
+#endif
 
+#if (UNITY_EDITOR)
     /// <summary>
     /// Rewrite the callback function => Just for debug, print mess when create room unsuccessfully
     /// </summary>
@@ -215,7 +205,9 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 #endif
 
     /// <summary>
-    /// Rewrite the callback function => Disable the lobby Panel and enable the room panel after the user successfully enters the room
+    /// Rewrite the callback function => 
+    /// 1) Disable the lobby Panel and enable the room panel after the user successfully enters the room
+    /// 2) Set the Custom Properties when enter room sucessfully
     /// </summary>
     /// <param></param>
     /// <returns></returns>
@@ -223,6 +215,10 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
     {
         lobbyPanel.SetActive(false);
         roomPanel.SetActive(true);
+
+#if (UNITY_EDITOR)
+        Debug.Log("Print Room Custom Properties: " + (String)PhotonNetwork.CurrentRoom.CustomProperties["createTime"]);
+#endif
     }
 
     /// <summary>
@@ -230,10 +226,36 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param></param>
     /// <returns></returns>
-    public override void OnPlayerPropertiesUpdate(Player player, ExitGames.Client.Photon.Hashtable hashtable)
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
         roomPanel.GetComponent<RoomPanelController>().DisableTeamPanel();
         roomPanel.GetComponent<RoomPanelController>().UpdateTeamPanel(true);
+        roomPanel.GetComponent<RoomPanelController>().ReadyButtonControl();
+
+        /*Debug.Log("Enter OnPlayerPropertiesUpdate");
+        object team = null;
+        object isReady = null;
+
+        if (changedProps.TryGetValue("Team", out team) && changedProps.TryGetValue("isReady", out isReady))
+        {
+            Debug.Log("changedProps.TryGetValue");
+        }
+        Debug.Log("team: " + team.ToString());
+        Debug.Log("Print Team info." + isReady.ToString());*/
+
+#if (UNITY_EDITOR)
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Team"))
+        {
+            Debug.Log("Print Team info.");
+            Debug.Log("PhotonNetwork.LocalPlayer.CustomProperties[Team]: " + (String)PhotonNetwork.LocalPlayer.CustomProperties["Team"]);
+        }
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("isReady"))
+        {
+            Debug.Log("Print Team isReady");
+            Debug.Log("PhotonNetwork.LocalPlayer.CustomProperties[isReady]: " + (bool)PhotonNetwork.LocalPlayer.CustomProperties["isReady"]);
+        }
+#endif
     }
 
     /// <summary>

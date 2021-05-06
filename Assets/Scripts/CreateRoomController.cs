@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections.Generic;
 
 public class CreateRoomController : MonoBehaviourPunCallbacks
 {
@@ -36,18 +38,17 @@ public class CreateRoomController : MonoBehaviourPunCallbacks
 		RoomOptions roomOptions = new RoomOptions();
 
         roomOptions.MaxPlayers = 2;
-        RoomInfo[] roomInfo = lobbyPanelScript.roomInfo;
 
         bool isRoomNameRepeat = false;
 
-		foreach(RoomInfo info in roomInfo)
+        foreach (KeyValuePair<string, RoomInfo> entry in lobbyPanelScript.cachedRoomList)
         {
-			if(roomName.text == info.Name)
+            if (roomName.text == entry.Value.Name)
             {
-				isRoomNameRepeat = true;
-				break;
-			}
-		}
+                isRoomNameRepeat = true;
+                break;
+            }
+        }
 
 		if(isRoomNameRepeat)
         {
@@ -55,9 +56,19 @@ public class CreateRoomController : MonoBehaviourPunCallbacks
 		}
 		else
         {
-			PhotonNetwork.CreateRoom(roomName.text, roomOptions, TypedLobby.Default);
+            String ut = DateTime.UtcNow.ToString();
+            roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
+            {
+                { "createTime", ut }
+            };
+            String[] s = { "createTime" };
+            roomOptions.CustomRoomPropertiesForLobby = s;
+
+            PhotonNetwork.CreateRoom(roomName.text, roomOptions, TypedLobby.Default);
+#if(UNITY_EDITOR)
             Debug.Log("Create the room");
-			createRoomPanel.SetActive(false);
+#endif
+            createRoomPanel.SetActive(false);
 			roomLoadingPanel.SetActive(true);
         }
 	}

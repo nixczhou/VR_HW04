@@ -2,7 +2,9 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class LobbyPanelController : MonoBehaviourPunCallbacks
 {
@@ -25,19 +27,28 @@ public class LobbyPanelController : MonoBehaviourPunCallbacks
     public Button backButton;               //the back button
     public Button randomJoinButton;         //the random join button
     public GameObject previousButton;       //the previous button
-    public GameObject nextButton;			//the next button
+    public GameObject nextButton;           //the next button
     
+    /// <summary>
+    /// save the room info. to cache on lobby
+    /// </summary>
     [HideInInspector]
-    public RoomInfo[] roomInfo;         //all room info. on the (default)joinlobby
+    public Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
 
-    private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
-    private GameObject[] roomMessage;       //room info. on the scene
+    /// <summary>
+    /// convert the data type from Dictionary to List
+    /// </summary>
     [HideInInspector]
-    public int currentPageNumber;          //the current page number
+    public List<KeyValuePair<string, RoomInfo>> myList = new List<KeyValuePair<string, RoomInfo>>();
+
+    [HideInInspector]
+    public int currentPageNumber;           //the current page number
     [HideInInspector]
     public int maxPageNumber;				//the max page number
     [HideInInspector]
-    public int roomPerPage = 4;            //the total number of the room per page
+    public int roomPerPage = 4;             //the total number of the room per page
+
+    private GameObject[] roomMessage;       //room info. on the scene
 
     /// <summary>
     /// Init all mess on lobby when the lobby Panel is enable
@@ -87,23 +98,31 @@ public class LobbyPanelController : MonoBehaviourPunCallbacks
     /// <returns></returns>
     public void ShowRoomMessage()
     {
-		int start, end, i, j;
+        myList = cachedRoomList.ToList();
+        myList.Sort((x, y) => Convert.ToDateTime(x.Value.CustomProperties["createTime"]).CompareTo(Convert.ToDateTime(y.Value.CustomProperties["createTime"])));
+
+#if(UNITY_EDITOR)
+        foreach (KeyValuePair<string, RoomInfo> item in myList)
+            Debug.Log("Room Properties = " + (String)item.Value.CustomProperties["createTime"]);
+#endif
+
+        int start, end, i, j;
 		start = (currentPageNumber - 1) * roomPerPage;
-		if(currentPageNumber * roomPerPage < roomInfo.Length)
+		if(currentPageNumber * roomPerPage < cachedRoomList.Count)
 			end = currentPageNumber * roomPerPage;
 		else
-			end = roomInfo.Length;
+			end = cachedRoomList.Count;
 
 		for(i = start, j = 0; i < end; i++, j++)
         {
 			RectTransform rectTransform = roomMessage[j].GetComponent<RectTransform>();
-			string roomName = roomInfo[i].Name;
-			rectTransform.GetChild(0).GetComponent<Text>().text = (i + 1).ToString();
+            string roomName = myList[i].Value.Name;
+            rectTransform.GetChild(0).GetComponent<Text>().text = (i + 1).ToString();
 			rectTransform.GetChild(1).GetComponent<Text>().text = roomName;
-			rectTransform.GetChild(2).GetComponent<Text>().text = roomInfo[i].PlayerCount + "/" + roomInfo [i].MaxPlayers;
+			rectTransform.GetChild(2).GetComponent<Text>().text = myList[i].Value.PlayerCount + "/" + myList[i].Value.MaxPlayers;
 			Button button = rectTransform.GetChild(3).GetComponent<Button>();
 
-			if(roomInfo[i].PlayerCount == roomInfo[i].MaxPlayers || roomInfo[i].IsOpen == false)
+			if(myList[i].Value.PlayerCount == myList[i].Value.MaxPlayers || myList[i].Value.IsOpen == false)
 				button.gameObject.SetActive(false);
 			else
             {
