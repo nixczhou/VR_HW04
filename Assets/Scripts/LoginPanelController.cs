@@ -138,7 +138,8 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 
     /// <summary>
     /// Rewrite the callback function => Update the room list after join the lobby "cleanly"
-    /// for more info., pls review: https://doc.photonengine.com/en-us/pun/v2/getting-started/migration-notes
+    /// for more info., pls review:
+    /// https://doc.photonengine.com/zh-tw/pun/current/lobby-and-matchmaking/matchmaking-and-lobby#default_lobby_type
     /// </summary>
     /// <param></param>
     /// <returns></returns>
@@ -205,9 +206,7 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 #endif
 
     /// <summary>
-    /// Rewrite the callback function => 
-    /// 1) Disable the lobby Panel and enable the room panel after the user successfully enters the room
-    /// 2) Set the Custom Properties when enter room sucessfully
+    /// Rewrite the callback function => Disable the lobby Panel and enable the room panel after the user successfully enters the room
     /// </summary>
     /// <param></param>
     /// <returns></returns>
@@ -223,6 +222,8 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
 
     /// <summary>
     /// Rewrite the callback function => Update the player info. after player attr. changed
+    /// For more info., pls review:
+    /// https://doc-api.photonengine.com/en/pun/v2/class_photon_1_1_pun_1_1_mono_behaviour_pun_callbacks.html#afb96ff9ce687e592d74866b8775f1b32
     /// </summary>
     /// <param></param>
     /// <returns></returns>
@@ -232,27 +233,16 @@ public class LoginPanelController : MonoBehaviourPunCallbacks
         roomPanel.GetComponent<RoomPanelController>().UpdateTeamPanel(true);
         roomPanel.GetComponent<RoomPanelController>().ReadyButtonControl();
 
-        /*Debug.Log("Enter OnPlayerPropertiesUpdate");
-        object team = null;
-        object isReady = null;
-
-        if (changedProps.TryGetValue("Team", out team) && changedProps.TryGetValue("isReady", out isReady))
-        {
-            Debug.Log("changedProps.TryGetValue");
-        }
-        Debug.Log("team: " + team.ToString());
-        Debug.Log("Print Team info." + isReady.ToString());*/
-
 #if (UNITY_EDITOR)
         if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("Team"))
         {
-            Debug.Log("Print Team info.");
+            Debug.Log("Print Team info.: ");
             Debug.Log("PhotonNetwork.LocalPlayer.CustomProperties[Team]: " + (String)PhotonNetwork.LocalPlayer.CustomProperties["Team"]);
         }
 
         if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("isReady"))
         {
-            Debug.Log("Print Team isReady");
+            Debug.Log("Print Team isReady or not: ");
             Debug.Log("PhotonNetwork.LocalPlayer.CustomProperties[isReady]: " + (bool)PhotonNetwork.LocalPlayer.CustomProperties["isReady"]);
         }
 #endif

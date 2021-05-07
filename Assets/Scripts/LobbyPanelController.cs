@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Generic;
 
 public class LobbyPanelController : MonoBehaviourPunCallbacks
 {
@@ -30,13 +30,13 @@ public class LobbyPanelController : MonoBehaviourPunCallbacks
     public GameObject nextButton;           //the next button
     
     /// <summary>
-    /// save the room info. to cache on lobby
+    /// Save the room info. to cache on lobby
     /// </summary>
     [HideInInspector]
     public Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
 
     /// <summary>
-    /// convert the data type from Dictionary to List
+    /// Convert the data type from Dictionary to List
     /// </summary>
     [HideInInspector]
     public List<KeyValuePair<string, RoomInfo>> myList = new List<KeyValuePair<string, RoomInfo>>();
@@ -99,6 +99,10 @@ public class LobbyPanelController : MonoBehaviourPunCallbacks
     public void ShowRoomMessage()
     {
         myList = cachedRoomList.ToList();
+
+        //ref.:
+        //1.)https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
+        //2.)https://stackoverflow.com/questions/14544953/c-sharp-sorting-a-listkeyvaluepairint-string
         myList.Sort((x, y) => Convert.ToDateTime(x.Value.CustomProperties["createTime"]).CompareTo(Convert.ToDateTime(y.Value.CustomProperties["createTime"])));
 
 #if(UNITY_EDITOR)

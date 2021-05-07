@@ -2,8 +2,6 @@
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 [RequireComponent(typeof(PhotonView))]
 public class RoomPanelController : MonoBehaviourPunCallbacks
@@ -90,8 +88,7 @@ public class RoomPanelController : MonoBehaviourPunCallbacks
                     { "Team", "team2" },
                     { "isReady", false }
             };
-            bool setBool = PhotonNetwork.LocalPlayer.SetCustomProperties(costomProperties);
-            Debug.Log("setBool: " + setBool);
+            PhotonNetwork.LocalPlayer.SetCustomProperties(costomProperties);
         }
 	}
 

@@ -35,12 +35,19 @@ public class CreateRoomController : MonoBehaviourPunCallbacks
     /// <returns></returns>
     public void ClickConfirmCreateRoomButton()
     {
+        if(roomName.text == "")
+        {
+            warningMess.text = "pls enter the room name!";
+            return;
+        }
+
 		RoomOptions roomOptions = new RoomOptions();
 
         roomOptions.MaxPlayers = 2;
 
         bool isRoomNameRepeat = false;
 
+        //ref.: https://stackoverflow.com/questions/141088/what-is-the-best-way-to-iterate-over-a-dictionary
         foreach (KeyValuePair<string, RoomInfo> entry in lobbyPanelScript.cachedRoomList)
         {
             if (roomName.text == entry.Value.Name)
