@@ -363,8 +363,6 @@ GameObject:
   - component: {fileID: 216824702}
   - component: {fileID: 216824701}
   - component: {fileID: 216824700}
-  - component: {fileID: 216824704}
-  - component: {fileID: 216824703}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -446,45 +444,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216824698}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &216824703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216824698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 0
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
---- !u!114 &216824704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216824698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 216824703}
-  sceneViewId: 3
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &250541151
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,6 +755,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 486226782}
+  - component: {fileID: 486226784}
+  - component: {fileID: 486226783}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -821,6 +782,45 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &486226783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486226781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
+--- !u!114 &486226784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486226781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 486226783}
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &541689466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,8 +1862,6 @@ GameObject:
   - component: {fileID: 1424511714}
   - component: {fileID: 1424511713}
   - component: {fileID: 1424511712}
-  - component: {fileID: 1424511716}
-  - component: {fileID: 1424511715}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -1945,45 +1943,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1424511710}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1424511715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424511710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 0
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
---- !u!114 &1424511716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424511710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1424511715}
-  sceneViewId: 2
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
 --- !u!1 &1450861865
 GameObject:
   m_ObjectHideFlags: 0
@@ -2566,6 +2525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce55fc8ef36bbcb4ea596cbcd8010554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  door: {fileID: 486226782}
 --- !u!114 &1597053594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4333,11 +4293,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 1859006944187519709, guid: 73c8802540055104ca37cc9c2dcf01ca,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73c8802540055104ca37cc9c2dcf01ca, type: 3}
