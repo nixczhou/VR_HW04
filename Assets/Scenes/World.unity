@@ -4701,6 +4701,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5743123121385048954, guid: 73c8802540055104ca37cc9c2dcf01ca,
+        type: 3}
+      propertyPath: m_MoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743123121385048959, guid: 73c8802540055104ca37cc9c2dcf01ca,
+        type: 3}
+      propertyPath: m_TurnStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743123121385048959, guid: 73c8802540055104ca37cc9c2dcf01ca,
+        type: 3}
+      propertyPath: m_MoveScheme
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73c8802540055104ca37cc9c2dcf01ca, type: 3}
 --- !u!114 &4035747108596108176
