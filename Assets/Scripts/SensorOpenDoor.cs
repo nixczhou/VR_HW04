@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
+using Photon.Realtime;
 public class SensorOpenDoor : MonoBehaviour
 {
-    public Transform door1;
-    public Transform door2;
+    public GameObject door1;
+    // public Transform door2;
 
     bool open = false;
     // Start is called before the first frame update
@@ -20,21 +21,21 @@ public class SensorOpenDoor : MonoBehaviour
         if (open)
         {
             // open door
-            if(door1.position.y < 9.0f)
+            if(door1.transform.position.y < 9.0f)
             {
                 Vector3 dy = Vector3.up * 4.0f * Time.deltaTime;
-                door1.position = door1.position + dy;
-                door2.position = door2.position + dy;
+                door1.transform.position = door1.transform.position + dy;
+                // door2.position = door2.position + dy;
             }
         }
         else
         {
             // close door
-            if(door1.position.y > 0.0f)
+            if(door1.transform.position.y > 0.0f)
             {
                 Vector3 dy = Vector3.up * -4.0f * Time.deltaTime;
-                door1.position = door1.position + dy;
-                door2.position = door2.position + dy;
+                door1.transform.position = door1.transform.position + dy;
+                // door2.position = door2.position + dy;
             }
         }
     }
@@ -73,6 +74,7 @@ public class SensorOpenDoor : MonoBehaviour
     {
         // if(collision.gameObject.tag != "Player")
         // {
+            door1.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer);
             Debug.Log("open door");
             open = true;
         // }
@@ -82,6 +84,7 @@ public class SensorOpenDoor : MonoBehaviour
     {
         // if(collision.gameObject.tag != "Player")
         // {
+            door1.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer);
             Debug.Log("close door");
             open = false;
         // }

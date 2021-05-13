@@ -22,7 +22,7 @@ public class Teleport : MonoBehaviour
         if(collision.gameObject.tag != "Player")
         {
             Debug.Log("Teleport");
-            collision.transform.position = TeleportTransform.position + Vector3.up * 1.0f;
+            collision.transform.position = TeleportTransform.position + Vector3.up * 0.5f;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class OpenBox : MonoBehaviour
 {
@@ -33,6 +35,7 @@ public class OpenBox : MonoBehaviour
 
     public void open_box()
     {
+        gameObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer);
         Debug.Log("open box");
         open = true;
     }
