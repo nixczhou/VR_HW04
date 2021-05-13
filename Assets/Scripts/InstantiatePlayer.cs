@@ -1,25 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class DisableBox : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class InstantiatePlayer : MonoBehaviour
 {
-    public GameObject box;
-    // public GameObject answer;
+    public GameObject playerPrefab;
     // Start is called before the first frame update
     void Start()
     {
-        disable_box();
+        PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    void disable_box()
-    {
-        box.SetActive(false);
     }
 }
