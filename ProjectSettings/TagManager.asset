@@ -7,6 +7,9 @@ TagManager:
   - GameLobby
   - Interactable
   - Button
+  - MainCameraTeam1
+  - MainCameraTeam2
+  - MainCamera2
   layers:
   - Default
   - TransparentFX
