@@ -11,6 +11,8 @@ TagManager:
   - Key
   - XRRigDemo1
   - XRRigDemo2
+  - ChatRoom
+  - ChatPage
   layers:
   - Default
   - TransparentFX

@@ -9,12 +9,15 @@ public class open : MonoBehaviour
     public GameObject stick;
     public GameObject keyboard;
     public GameObject canvas;
+    public GameObject chatroom;
+
     // Start is called before the first frame update
     void Start()
     {
         stick.SetActive(false);
         keyboard.SetActive(false);
         canvas.SetActive(false);
+        chatroom.SetActive(false);
     }
 
     // Update is called once per frame
@@ -25,11 +28,13 @@ public class open : MonoBehaviour
                 stick.SetActive(false);
                 keyboard.SetActive(false);
                 canvas.SetActive(false);
+                chatroom.SetActive(false);
             }
             else {
                 stick.SetActive(true);
                 keyboard.SetActive(true);
                 canvas.SetActive(true);
+                chatroom.SetActive(true);
             }
         }
     }

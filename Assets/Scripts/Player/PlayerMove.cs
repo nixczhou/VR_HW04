@@ -9,6 +9,8 @@ public class PlayerMove : MonoBehaviour
 	private float minMouseRotateX = -45.0f;
     private float maxMouseRotateX = 45.0f;
     private float mouseRotateX;
+
+	public GameObject keyboard;
 	
 	Camera myCamera;
     //Rigidbody rigid;
@@ -30,9 +32,12 @@ public class PlayerMove : MonoBehaviour
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
             Move(h, v);
-            float rv = Input.GetAxisRaw("Mouse X");
-            float rh = Input.GetAxisRaw("Mouse Y");
-            Rotate(rh, rv);
+
+			if(keyboard.activeSelf == false){
+				float rv = Input.GetAxisRaw("Mouse X");
+				float rh = Input.GetAxisRaw("Mouse Y");
+				Rotate(rh, rv);
+			}
         }
 	}
     
@@ -49,25 +54,3 @@ public class PlayerMove : MonoBehaviour
 		myCamera.transform.localEulerAngles = new Vector3 (mouseRotateX, 0.0f, 0.0f);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

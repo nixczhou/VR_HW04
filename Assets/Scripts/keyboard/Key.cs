@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class Key : MonoBehaviour
 	public Color PressedKeycapColor;
 	public Color KeycapColor;
 	public Color InitialKeycapColor;
+
+	public GameObject ChatPage;
 
 	protected Transform initialPosition;
 	private KeycodeAdder keycodeAdder;
@@ -36,6 +39,8 @@ public class Key : MonoBehaviour
 		keyCapText = this.gameObject.GetComponentInChildren<Text> ();
 		KeycapColor = this.gameObject.GetComponent<Renderer> ().material.color;
 		InitialKeycapColor = KeycapColor;
+
+		ChatPage = GameObject.FindWithTag("ChatPage");
 
 		initialPosition = new GameObject(string.Format("[{0}] initialPosition", this.gameObject.name)).transform;
 		initialPosition.parent = this.transform.parent;
@@ -74,7 +79,9 @@ public class Key : MonoBehaviour
 			if (currentDistance > DistanceToBePressed)
 			{
 				KeyPressed = true;
-				//keyPressed ();
+				// keyPressed ();
+				// print(KeyCapChar);
+				ChatPage.GetComponent<Text>().text += KeyCapChar;
 				if (symbolSwitch)
 				{
 					keycodeAdder.SimulateAlternateKeyPress ();
