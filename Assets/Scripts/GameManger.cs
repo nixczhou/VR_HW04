@@ -12,9 +12,7 @@ public class GameManger : MonoBehaviour
     private GameObject localPlayer = null;
     private Camera mainCamera;
 
-
     private List<GameObject> listOfChildren;
-
 
     private void GetChildRecursive(GameObject obj){
         if (null == obj)
@@ -49,7 +47,7 @@ public class GameManger : MonoBehaviour
         {
             localPlayer = PhotonNetwork.Instantiate("Player_Team2", teamTwoTransform.position, Quaternion.identity, 0);
         }
-
+        
         GameObject tempTransform = localPlayer;
 
         GetChildRecursive(tempTransform);
@@ -62,4 +60,5 @@ public class GameManger : MonoBehaviour
 		mainCamera.transform.localRotation = Quaternion.identity;
 
     }
+
 }
