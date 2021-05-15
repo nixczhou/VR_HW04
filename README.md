@@ -1,6 +1,14 @@
 # VR_HW04 Multiplayer Homework
 
 *** NOTE : Delete 'Script' (without s) folder, if there is any error when opening the unity project
+
+### Control
+
+- WASD To move the player
+- Shift + Mouse Click + Drag to move XR Rig Controller
+- Shift + G to grab gameobject using Ray
+- Press T to aactivate keyboard and chat room
+
  
 ### Main Lobby and Join Lobby
 - [x]  Host(5%)
