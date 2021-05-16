@@ -9,11 +9,12 @@ public class open : MonoBehaviour
     public GameObject stick;
     public GameObject keyboard;
     public GameObject canvas;
-    public GameObject chatroom;
+    private GameObject chatroom;
 
     // Start is called before the first frame update
     void Start()
     {
+        chatroom = GameObject.FindWithTag("ChatRoom");
         stick.SetActive(false);
         keyboard.SetActive(false);
         canvas.SetActive(false);
