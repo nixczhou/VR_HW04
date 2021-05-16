@@ -499,6 +499,7 @@ GameObject:
   - component: {fileID: 3509393182935745667}
   - component: {fileID: 3038553632610603321}
   - component: {fileID: 3740125798532923385}
+  - component: {fileID: 7880057392628695311}
   m_Layer: 0
   m_Name: Player_Team2
   m_TagString: Player
@@ -594,6 +595,18 @@ MonoBehaviour:
   moveSpeed: 6
   rotateSpeed: 10
   keyboard: {fileID: 3509705645838808824}
+--- !u!114 &7880057392628695311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3740125798532923384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c87e77b5ab2d3842a3d896ebdcb6b5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3740125798583333736
 GameObject:
   m_ObjectHideFlags: 0
@@ -3257,15 +3270,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12c20459416746047b5ce32350de37c1, type: 3}
---- !u!1 &5713295510640352826 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7305594584942436142, guid: 12c20459416746047b5ce32350de37c1,
-    type: 3}
-  m_PrefabInstance: {fileID: 3038553633908031764}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5713295510640181786 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7305594584942592782, guid: 12c20459416746047b5ce32350de37c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 3038553633908031764}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5713295510640352826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7305594584942436142, guid: 12c20459416746047b5ce32350de37c1,
     type: 3}
   m_PrefabInstance: {fileID: 3038553633908031764}
   m_PrefabAsset: {fileID: 0}
