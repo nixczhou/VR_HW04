@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-public class TransferOwnership : MonoBehaviour
+using TMPro;
+public class ShowPlayerName : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
+        string nickname = PhotonNetwork.LocalPlayer.NickName;
+        Debug.Log(nickname);
+        TextMeshPro mText = gameObject.GetComponent<TextMeshPro>();
+        mText.text = nickname;
     }
 
     // Update is called once per frame
@@ -15,10 +20,4 @@ public class TransferOwnership : MonoBehaviour
     {
         
     }
-
-    public void Transfer_Ownership()
-    {
-        gameObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer);
-    }
-    
 }
