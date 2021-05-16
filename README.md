@@ -1,6 +1,13 @@
 # VR_HW04 Multiplayer Homework
 
 *** NOTE : Delete 'Script' (without s) folder, if there is any error when opening the unity project
+
+
+### Dependencies
+- Unity 2019.4.21f
+- Photon Unity
+- XR Interaction Toolkit
+- Windows 10
  
 ### Main Lobby and Join Lobby
 - [x]  Host(5%)
